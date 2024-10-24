@@ -185,7 +185,7 @@ program
                 : [];
 
         try {
-            // Search for existing entries with the same URL
+            // duplicate url
             const response = await notion.databases.query({
                 database_id: config.currentDatabase,
                 filter: {
@@ -197,7 +197,6 @@ program
             });
 
             if (response.results.length > 0) {
-                // If an entry with the same URL exists, update it
                 const existingPageId = response.results[0].id;
                 await notion.pages.update({
                     page_id: existingPageId,
@@ -211,7 +210,6 @@ program
                 });
                 console.log('Entry updated successfully!');
             } else {
-                // If no entry exists, create a new one
                 await notion.pages.create({
                     parent: { database_id: config.currentDatabase },
                     properties: {
@@ -226,6 +224,27 @@ program
             }
         } catch (error) {
             console.error('Error adding/updating entry:', error.message);
+        }
+    });
+
+program
+    .command('unsync')
+    .description('Remove Notion authorization')
+    .action(() => {
+        const configPath = path.join(
+            process.env.HOME || process.env.USERPROFILE,
+            '.fast-notion'
+        );
+
+        if (fs.existsSync(configPath)) {
+            fs.unlinkSync(configPath);
+            console.log(
+                'Authorization removed successfully. You can reauthorize using "noti auth".'
+            );
+        } else {
+            console.log(
+                'No authorization found. You are not currently authorized.'
+            );
         }
     });
 
