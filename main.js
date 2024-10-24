@@ -6,6 +6,8 @@ const setDbCommand = require('./commands/setDb');
 const addEntryCommand = require('./commands/addEntry');
 const unsyncCommand = require('./commands/unsync');
 const listDatabasesCommand = require('./commands/listDatabases');
+const searchCommand = require('./commands/search');
+
 const recordCommand = require('./commands/record');
 
 const { version } = require('./package.json');
@@ -43,6 +45,11 @@ program
         }
         addEntryCommand(title, url, tags);
     });
+
+program
+    .command('search <searchText>')
+    .description('Search for entries in the current database')
+    .action(searchCommand);
 
 program
     .command('unsync')
