@@ -25,6 +25,7 @@ async function recordCommand() {
         if (response.results.length > 0) {
             console.log('Records in the selected database:');
             response.results.forEach((record, index) => {
+                const pageId = record.id;
                 const title =
                     record.properties.Title.title[0]?.plain_text || 'Untitled';
                 const url = record.properties.URL.url || 'No URL';
@@ -33,7 +34,9 @@ async function recordCommand() {
                         .map((tag) => tag.name)
                         .join(', ') || 'No Tags';
                 console.log(
-                    `${index + 1}. Title: ${title}, URL: ${url}, Tags: ${tags}`
+                    `${
+                        index + 1
+                    }. Title: ${title}, URL: ${url}, Tags: ${tags}, Page ID: ${pageId}`
                 );
             });
         } else {

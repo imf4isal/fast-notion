@@ -7,6 +7,7 @@ const addEntryCommand = require('./commands/addEntry');
 const unsyncCommand = require('./commands/unsync');
 const listDatabasesCommand = require('./commands/listDatabases');
 const searchCommand = require('./commands/search');
+const deleteCommand = require('./commands/delete');
 
 const recordCommand = require('./commands/record');
 
@@ -52,6 +53,11 @@ program
     .action(searchCommand);
 
 program
+    .command('delete <input>')
+    .description('Delete an entry from the current database')
+    .action(deleteCommand);
+
+program
     .command('unsync')
     .description('Remove Notion authorization')
     .action(unsyncCommand);
@@ -74,6 +80,8 @@ program.on('--help', () => {
     console.log('  $ noti add "My Title" https://example.com tag1,tag2');
     console.log('  $ noti unsync');
     console.log('  $ noti db');
+    console.log('  $ noti delete <pageId>');
+    console.log('  $ noti search "SearchText"');
 });
 
 program.parse(process.argv);
