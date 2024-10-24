@@ -1,5 +1,6 @@
 const { Client } = require('@notionhq/client');
-const { loadConfig } = require('../utils/config');
+const { loadConfig, saveConfig } = require('../utils/config');
+const inquirer = require('inquirer');
 
 async function listDatabasesCommand() {
     const config = loadConfig();
@@ -16,19 +17,36 @@ async function listDatabasesCommand() {
         });
 
         if (response.results.length > 0) {
-            console.log('Your Notion databases:');
-            response.results.forEach((database, index) => {
-                console.log(
-                    `${index + 1}. ${
-                        database.title[0]?.plain_text || 'Untitled'
-                    } (ID: ${database.id})`
-                );
-            });
+            const choices = response.results.map((database) => ({
+                name: database.title[0]?.plain_text || 'Untitled',
+                value: database.id,
+            }));
+
+            const answer = await inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'selectedDatabase',
+                    message: 'Select a database:',
+                    choices: choices,
+                },
+            ]);
+
+            config.currentDatabase = answer.selectedDatabase;
+            saveConfig(config);
+            console.log(
+                `Current database set to: ${
+                    choices.find((c) => c.value === answer.selectedDatabase)
+                        .name
+                }`
+            );
         } else {
             console.log('No databases found in your Notion workspace.');
         }
     } catch (error) {
         console.error('Error listing databases:', error.message);
+        if (error.stack) {
+            console.error('Stack trace:', error.stack);
+        }
     }
 }
 

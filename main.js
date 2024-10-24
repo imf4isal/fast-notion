@@ -30,6 +30,7 @@ program
     .command('unsync')
     .description('Remove Notion authorization')
     .action(unsyncCommand);
+
 program
     .command('db')
     .description('List all databases in your Notion workspace')
