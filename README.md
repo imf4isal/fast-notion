@@ -1,22 +1,22 @@
-# Fast-Notion
+# Noti
 
-Fast-Notion is a command-line interface (CLI) tool for managing Notion databases directly from your terminal. It allows you to quickly add entries, set databases, and manage your Notion integration without leaving your command line.
+Noti is a command-line interface (CLI) tool for managing Notion databases directly from your terminal. It allows you to quickly add entries, set databases, and manage your Notion integration without leaving your command line.
 
 ## Installation
 
-To install Fast-Notion globally, run: `npm install -g fastnotion`
+To install Noti globally, run: `npm install -g noti`
 
 ## Usage
 
-After installation, you can use the `noti` command to interact with Fast-Notion.
+After installation, you can use the `noti` command to interact with Noti.
 
 ### Authorization
 
-Before using Fast-Notion, you need to authorize it with your Notion account: `noti auth`
+Before using Noti, you need to authorize it with your Notion account: `noti auth`
 
 It will open a new browser window for you to authorize the app. If not, you can manually authorize the app by clicking [this link](https://www.notion.so/my-integrations) and then re-run the `noti auth` command.
 
-To authorize Fast-Notion properly, please follow these steps:
+To authorize Noti properly, please follow these steps:
 
 1. Go to https://www.notion.so/my-integrations
 2. Click on "New integration"
@@ -67,6 +67,6 @@ Note:
 Notion is a great tool for organizing your thoughts, ideas, and information.
 However, navigating through the various pages and databases can be overwhelming. As a developer, I love the terminal, and I hope you do too.
 
-Fast-Notion makes the curating process simple and fast directly from your terminal. And as we know, Fast is fun.
+Noti makes the curating process simple and fast directly from your terminal. And as we know, Fast is fun.
 
 Have fun curating!

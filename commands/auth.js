@@ -3,7 +3,7 @@ const { saveConfig, loadConfig } = require('../utils/config');
 const promptForInput = require('../utils/prompt');
 
 async function authCommand() {
-    console.log('To authorize Fast-Notion, please follow these steps:');
+    console.log('To authorize Noti, please follow these steps:');
     console.log('1. Go to https://www.notion.so/my-integrations');
     console.log('2. Click on "New integration"');
     console.log('3. Give your integration a name (e.g., "Curate")');

@@ -6,7 +6,7 @@ dotenv.config();
 
 const configPath = path.join(
     process.env.HOME || process.env.USERPROFILE,
-    '.fast-notion'
+    '.noti'
 );
 
 function saveConfig(config) {

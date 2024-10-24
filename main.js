@@ -15,9 +15,7 @@ const { version } = require('./package.json');
 
 program
     .version(version, '-v, --version', 'output the current version')
-    .description(
-        'Fast-Notion. A CLI tool for curating fast in Notion databases.'
-    );
+    .description('Noti. A CLI tool for curating fast in Notion databases.');
 
 program.command('auth').description('Authorize Notion').action(authCommand);
 
