@@ -1,7 +1,7 @@
 {
-    "name": "noti",
+    "name": "noti-fast",
     "version": "1.0.0",
-    "description": "",
+    "description": "Noti. A CLI tool for curating fast in Notion databases.",
     "main": "main.js",
     "bin": {
         "noti": "./main.js"
