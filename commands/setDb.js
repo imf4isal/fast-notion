@@ -26,54 +26,87 @@ async function setDbCommand(dbname) {
                 `Database "${dbname}" not found. Attempting to create a new one...`
             );
 
-            // search for a page where we can create a database
             response = await notion.search({
                 filter: { property: 'object', value: 'page' },
             });
 
+            console.log(`Found ${response.results.length} pages.`);
+
             if (response.results.length > 0) {
                 const parentPage = response.results[0];
+
+                let parentPageTitle = 'Untitled';
+                if (
+                    parentPage.properties &&
+                    parentPage.properties.title &&
+                    parentPage.properties.title.title &&
+                    parentPage.properties.title.title.length > 0
+                ) {
+                    parentPageTitle =
+                        parentPage.properties.title.title[0].plain_text;
+                }
+
                 console.log(
-                    `Creating new database in page: ${parentPage.properties.title.title[0].plain_text}`
+                    `Attempting to create new database in page: ${parentPageTitle} (ID: ${parentPage.id})`
                 );
 
-                const newDatabase = await notion.databases.create({
-                    parent: { type: 'page_id', page_id: parentPage.id },
-                    title: [{ type: 'text', text: { content: dbname } }],
-                    properties: {
-                        Title: { title: {} },
-                        URL: { url: {} },
-                        Tags: { multi_select: {} },
-                    },
-                });
+                try {
+                    const newDatabase = await notion.databases.create({
+                        parent: { type: 'page_id', page_id: parentPage.id },
+                        title: [{ type: 'text', text: { content: dbname } }],
+                        properties: {
+                            Title: { title: {} },
+                            URL: { url: {} },
+                            Tags: { multi_select: {} },
+                        },
+                    });
 
-                databaseId = newDatabase.id;
-                console.log(`Created new database: ${dbname}`);
+                    databaseId = newDatabase.id;
+                    console.log(
+                        `Created new database: ${dbname} (ID: ${databaseId})`
+                    );
+                } catch (createError) {
+                    console.error(
+                        'Error creating database:',
+                        createError.message
+                    );
+                    if (createError.body) {
+                        console.error(
+                            'Error details:',
+                            JSON.stringify(createError.body, null, 2)
+                        );
+                    }
+                    console.log(
+                        'Please ensure that your integration has the necessary permissions to create databases.'
+                    );
+                    return;
+                }
             } else {
                 console.log('No parent page found to create the database.');
                 console.log('Please follow these steps:');
                 console.log('1. Go to your Notion workspace');
                 console.log('2. Create a new page');
                 console.log(
-                    '3. Go to the page settings. 3 dot at top right corner.'
+                    '3. Go to the page settings (3 dots at top right corner)'
                 );
                 console.log(
-                    '4. Under the Connections section, select - Connnect to.'
+                    '4. Under the Connections section, select your integration'
                 );
                 console.log('5. Run this command again');
                 return;
             }
         }
 
-        const config = loadConfig();
         config.currentDatabase = databaseId;
         saveConfig(config);
-
         console.log(`Current database set to: ${dbname}`);
     } catch (error) {
         console.error('Error setting/creating database:', error.message);
         if (error.body) {
-            console.error('Error details:', error.body);
+            console.error(
+                'Error details:',
+                JSON.stringify(error.body, null, 2)
+            );
         }
     }
 }

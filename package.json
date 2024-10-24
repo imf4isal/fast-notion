@@ -1,6 +1,6 @@
 {
     "name": "fastnotion",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "main": "main.js",
     "bin": {
@@ -12,6 +12,10 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/imf4isal/fast-notion"
+    },
     "dependencies": {
         "@notionhq/client": "^2.2.15",
         "commander": "^12.1.0",
