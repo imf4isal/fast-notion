@@ -4,7 +4,7 @@ Noti is a command-line interface (CLI) tool for managing Notion databases direct
 
 ## Installation
 
-To install Noti globally, run: `npm install -g noti`
+To install Noti globally, run: `npm install -g noti-fast`
 
 ## Usage
 
