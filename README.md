@@ -56,6 +56,10 @@ To list all databases: `noti db`
 
 To show all records in the selected database: `noti record`
 
+To search for a record: `noti search <searchText>`
+
+To delete a record: `noti delete <pageId>`
+
 Note:
 
 1. Inverted commas are optional if the title contains only one word. For multiple words, you must use inverted commas.
