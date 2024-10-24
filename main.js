@@ -5,11 +5,14 @@ const authCommand = require('./commands/auth');
 const setDbCommand = require('./commands/setDb');
 const addEntryCommand = require('./commands/addEntry');
 const unsyncCommand = require('./commands/unsync');
+const listDatabasesCommand = require('./commands/listDatabases');
 const { version } = require('./package.json');
 
 program
     .version(version, '-v, --version', 'output the current version')
-    .description('Fast-Notion CLI for managing Notion databases');
+    .description(
+        'Fast-Notion. A CLI tool for curating fast in Notion databases.'
+    );
 
 program.command('auth').description('Authorize Notion').action(authCommand);
 
@@ -27,6 +30,10 @@ program
     .command('unsync')
     .description('Remove Notion authorization')
     .action(unsyncCommand);
+program
+    .command('db')
+    .description('List all databases in your Notion workspace')
+    .action(listDatabasesCommand);
 
 program.on('--help', () => {
     console.log('');
@@ -35,6 +42,7 @@ program.on('--help', () => {
     console.log('  $ noti set-db "My Database"');
     console.log('  $ noti add "My Title" https://example.com tag1,tag2');
     console.log('  $ noti unsync');
+    console.log('  $ noti db');
 });
 
 program.parse(process.argv);
