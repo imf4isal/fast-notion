@@ -6,6 +6,8 @@ const setDbCommand = require('./commands/setDb');
 const addEntryCommand = require('./commands/addEntry');
 const unsyncCommand = require('./commands/unsync');
 const listDatabasesCommand = require('./commands/listDatabases');
+const recordCommand = require('./commands/record');
+
 const { version } = require('./package.json');
 
 program
@@ -35,6 +37,11 @@ program
     .command('db')
     .description('List all databases in your Notion workspace')
     .action(listDatabasesCommand);
+
+program
+    .command('record')
+    .description('Show all records in the selected database')
+    .action(recordCommand);
 
 program.on('--help', () => {
     console.log('');

@@ -50,6 +50,12 @@ To add a new entry to the current database: `noti add <title> <url> <tag1>`
 
 i.e. `noti add "My Favorite Website" https://www.google.com/ "Google,Search Engine"`
 
+### Interact with Database
+
+To list all databases: `noti db`
+
+To show all records in the selected database: `noti record`
+
 Note:
 
 1. Inverted commas are optional if the title contains only one word. For multiple words, you must use inverted commas.
