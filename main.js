@@ -156,6 +156,79 @@ program
         }
     });
 
+program
+    .command('add <title> <url> [tags...]')
+    .description(
+        'Add a new entry to the current database or update an existing one with the same URL'
+    )
+    .action(async (title, url, tags) => {
+        if (!initNotionClient()) {
+            console.log('Please run "noti auth" first to authorize.');
+            return;
+        }
+
+        const config = loadConfig();
+        if (!config.currentDatabase) {
+            console.log(
+                'Please set a current database using "noti set-db <dbname>" first.'
+            );
+            return;
+        }
+
+        //  if multiple tags are provided as a single string
+        const tagList =
+            tags.length > 0
+                ? tags
+                      .join(' ')
+                      .split(',')
+                      .map((tag) => tag.trim())
+                : [];
+
+        try {
+            // Search for existing entries with the same URL
+            const response = await notion.databases.query({
+                database_id: config.currentDatabase,
+                filter: {
+                    property: 'URL',
+                    url: {
+                        equals: url,
+                    },
+                },
+            });
+
+            if (response.results.length > 0) {
+                // If an entry with the same URL exists, update it
+                const existingPageId = response.results[0].id;
+                await notion.pages.update({
+                    page_id: existingPageId,
+                    properties: {
+                        Title: { title: [{ text: { content: title } }] },
+                        URL: { url: url },
+                        Tags: {
+                            multi_select: tagList.map((tag) => ({ name: tag })),
+                        },
+                    },
+                });
+                console.log('Entry updated successfully!');
+            } else {
+                // If no entry exists, create a new one
+                await notion.pages.create({
+                    parent: { database_id: config.currentDatabase },
+                    properties: {
+                        Title: { title: [{ text: { content: title } }] },
+                        URL: { url: url },
+                        Tags: {
+                            multi_select: tagList.map((tag) => ({ name: tag })),
+                        },
+                    },
+                });
+                console.log('Entry added successfully!');
+            }
+        } catch (error) {
+            console.error('Error adding/updating entry:', error.message);
+        }
+    });
+
 program.parse(process.argv);
 
 function promptForInput(question) {
