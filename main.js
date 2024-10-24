@@ -23,10 +23,26 @@ program
     .description('Set the current database or create a new one')
     .action(setDbCommand);
 
+// program
+//     .command('add [title] <url> [tags...]')
+//     .description('Add a new entry to the current database')
+//     .action(addEntryCommand);
+
 program
-    .command('add <title> <url> [tags...]')
+    .command('add <input...>')
     .description('Add a new entry to the current database')
-    .action(addEntryCommand);
+    .action((input) => {
+        let title, url, tags;
+        if (input[0].startsWith('http')) {
+            url = input[0];
+            tags = input.slice(1);
+        } else {
+            title = input[0];
+            url = input[1];
+            tags = input.slice(2);
+        }
+        addEntryCommand(title, url, tags);
+    });
 
 program
     .command('unsync')
