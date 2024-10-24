@@ -4,7 +4,7 @@ Fast-Notion is a command-line interface (CLI) tool for managing Notion databases
 
 ## Installation
 
-To install Fast-Notion globally, run: `npm install -g fast-notion`
+To install Fast-Notion globally, run: `npm install -g fastnotion`
 
 ## Usage
 
