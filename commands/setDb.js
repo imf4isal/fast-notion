@@ -16,8 +16,6 @@ async function setDbCommand(dbname) {
             filter: { property: 'object', value: 'database' },
         });
 
-        console.log(response);
-
         let databaseId;
 
         if (response.results.length > 0) {
